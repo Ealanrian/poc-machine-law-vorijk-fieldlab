@@ -26,14 +26,14 @@ class MachineLawBindings {
     ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup,
   ) : _lookup = lookup;
 
-  Result_t Evaluate(
-    ffi.Pointer<ffi.Char> service,
-    ffi.Pointer<ffi.Char> law,
-    Params_t parameters,
-    ffi.Pointer<ffi.Char> referenceDate,
-    ffi.Pointer<ffi.Char> effectiveDate,
-    Params_t overwriteInput,
-    ffi.Pointer<ffi.Char> requestedOutput,
+  Machine_law_Result_t Evaluate(
+    String_t service,
+    String_t law,
+    Machine_law_Params_t parameters,
+    String_t referenceDate,
+    String_t effectiveDate,
+    Machine_law_Params_t overwriteInput,
+    String_t requestedOutput,
     int approved,
   ) {
     return _Evaluate(
@@ -51,28 +51,28 @@ class MachineLawBindings {
   late final _EvaluatePtr =
       _lookup<
         ffi.NativeFunction<
-          Result_t Function(
-            ffi.Pointer<ffi.Char>,
-            ffi.Pointer<ffi.Char>,
-            Params_t,
-            ffi.Pointer<ffi.Char>,
-            ffi.Pointer<ffi.Char>,
-            Params_t,
-            ffi.Pointer<ffi.Char>,
+          Machine_law_Result_t Function(
+            String_t,
+            String_t,
+            Machine_law_Params_t,
+            String_t,
+            String_t,
+            Machine_law_Params_t,
+            String_t,
             ffi.Int,
           )
         >
       >('Evaluate');
   late final _Evaluate =
       _EvaluatePtr.asFunction<
-        Result_t Function(
-          ffi.Pointer<ffi.Char>,
-          ffi.Pointer<ffi.Char>,
-          Params_t,
-          ffi.Pointer<ffi.Char>,
-          ffi.Pointer<ffi.Char>,
-          Params_t,
-          ffi.Pointer<ffi.Char>,
+        Machine_law_Result_t Function(
+          String_t,
+          String_t,
+          Machine_law_Params_t,
+          String_t,
+          String_t,
+          Machine_law_Params_t,
+          String_t,
           int,
         )
       >();
@@ -86,48 +86,53 @@ class MachineLawBindings {
   late final _machineLawStandalone = _machineLawStandalonePtr
       .asFunction<int Function()>();
 
-  void startMachineLawEngine() {
-    return _startMachineLawEngine();
-  }
-
-  late final _startMachineLawEnginePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('startMachineLawEngine');
-  late final _startMachineLawEngine = _startMachineLawEnginePtr
-      .asFunction<void Function()>();
-
-  void freeParams(Params_t params) {
+  void freeParams(Machine_law_Params_t params) {
     return _freeParams(params);
   }
 
   late final _freeParamsPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Params_t)>>('freeParams');
-  late final _freeParams = _freeParamsPtr.asFunction<void Function(Params_t)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(Machine_law_Params_t)>>(
+        'freeParams',
+      );
+  late final _freeParams = _freeParamsPtr
+      .asFunction<void Function(Machine_law_Params_t)>();
 
-  void freeRuleResult(Result_t result) {
+  void freeRuleResult(Machine_law_Result_t result) {
     return _freeRuleResult(result);
   }
 
   late final _freeRuleResultPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(Result_t)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(Machine_law_Result_t)>>(
         'freeRuleResult',
       );
   late final _freeRuleResult = _freeRuleResultPtr
-      .asFunction<void Function(Result_t)>();
+      .asFunction<void Function(Machine_law_Result_t)>();
 }
 
-final class Params_t extends ffi.Struct {
+final class String_t extends ffi.Struct {
+  @ffi.Uint16()
+  external int length;
+
+  external ffi.Pointer<ffi.Uint8> string;
+}
+
+final class Machine_law_param_t extends ffi.Struct {
+  external String_t paramName;
+
+  external String_t paramValue;
+}
+
+final class Machine_law_Params_t extends ffi.Struct {
   /// Define the structure for parameters
   @ffi.Int()
   external int numParams;
 
-  external ffi.Pointer<ffi.Pointer<ffi.Char>> paramNames;
-
-  external ffi.Pointer<ffi.Pointer<ffi.Void>> paramValues;
+  external ffi.Pointer<Machine_law_param_t> params;
 }
 
-final class Result_t extends ffi.Struct {
-  @ffi.Int()
+final class Machine_law_Result_t extends ffi.Struct {
+  @ffi.Uint8()
   external int resultCode;
 
-  external ffi.Pointer<ffi.Char> resultMessage;
+  external String_t resultMessage;
 }

@@ -4,6 +4,9 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
 
+
+import 'package:ffi/ffi.dart';
+
 import 'machine_law_bindings_generated.dart';
 
 /// A very short-lived native function.
@@ -16,7 +19,47 @@ import 'machine_law_bindings_generated.dart';
 
 int machineLawStandalone() => _bindings.machineLawStandalone();
 
-void startMachineLawEngine() => _bindings.startMachineLawEngine();
+
+int machineLawEvaluate() {
+
+  final servicename = "TOESLAGEN";
+  final Pointer<String_t> service = createStringPointer(servicename);
+  final Pointer<String_t> law = createStringPointer("zorgtoeslagwet");
+  final Pointer<Machine_law_Params_t> parameters = createParametersPointer();
+
+
+  Machine_law_Result_t result =_bindings.Evaluate(service.ref, law.ref, parameters, referenceDate, effectiveDate, overwriteInput, requestedOutput, approved);
+
+
+  freeString(service);
+  freeString(law);
+  return 0;
+}
+
+
+Pointer<String_t> createStringPointer(String string){
+  final Pointer<Uint8> stringPointer = calloc<Uint8>(string.length);
+  stringPointer.asTypedList(string.length).setAll(0, string.codeUnits);
+  final Pointer<String_t> cString = calloc<String_t>();
+  cString.ref.length = string.length;
+  cString.ref.string = stringPointer;
+  return cString;
+}
+
+void freeString(Pointer<String_t> pointer) {
+  calloc.free(pointer.ref.string);
+  calloc.free(pointer);
+}
+
+Pointer<Machine_law_Params_t> createParametersPointer() {
+  final Pointer<Machine_law_Params_t> cParams = calloc<Machine_law_Params_t>();
+  cParams.ref.numParams = 0;
+  cParams.ref.params = calloc<Machine_law_param_t>(10);
+  final Pointer<Machine_law_param_t> cParam = calloc<Machine_law_param_t>(10);
+  cParam.asTypedList()
+
+  return cParams;
+}
 
 /// A longer lived native function, which occupies the thread calling it.
 ///

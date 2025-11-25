@@ -79,10 +79,10 @@ func rulesLoad(dir string) ([]RuleSpec, map[string]map[string]struct{}, map[stri
 
 	err := func() error {
 		// First, evaluate the symlink to get the actual path
-		realPath, err := filepath.EvalSymlinks(dir) // todo break symlink
-		if err != nil {
+		realPath := "/home/erik/workspace/ghdev/fieldlab/poc-machine-law-vorijk-fieldlab/machinev2/machine/ruleresolver/law"// todo break symlink
+		/*if err != nil {
 			return fmt.Errorf("failed to evaluate symlink %s: %w", dir, err)
-		}
+		}*/
 
 		// Now walk the real path
 		return filepath.Walk(realPath, func(path string, info os.FileInfo, err error) error {

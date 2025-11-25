@@ -3,9 +3,11 @@ module machine_law
 go 1.25.3
 
 require (
-	github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine v0.0.0-20251124152009-09a420ffc71e
+	github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine v0.0.0
 	github.com/sirupsen/logrus v1.9.3
 )
+
+replace github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine => ../../machine
 
 require (
 	github.com/Khan/genqlient v0.8.1 // indirect

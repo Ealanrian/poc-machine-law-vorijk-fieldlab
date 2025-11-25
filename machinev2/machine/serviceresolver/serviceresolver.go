@@ -68,11 +68,11 @@ func serviceLoad(dir string) ([]ServiceSpec, error) {
 
 	err := func() error {
 		// First, evaluate the symlink to get the actual path
-		realPath, err := filepath.EvalSymlinks(dir)
-		if err != nil {
-			return fmt.Errorf("failed to evaluate symlink %s: %w", dir, err)
-		}
-
+		//realPath, err := filepath.EvalSymlinks(dir)
+		//if err != nil {
+			//return fmt.Errorf("failed to evaluate symlink %s: %w", dir, err)
+		//}
+		realPath := "/home/erik/workspace/ghdev/fieldlab/poc-machine-law-vorijk-fieldlab/machinev2/machine/serviceresolver/services"
 		// Now walk the real path
 		return filepath.Walk(realPath, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
