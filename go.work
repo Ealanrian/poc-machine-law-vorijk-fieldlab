@@ -5,5 +5,6 @@ use (
 	./lac-to-regelspraak
 	./machinev2/backend
 	./machinev2/machine
+	./machinev2/machine_law/src
 	./simulator
 )

@@ -79,7 +79,7 @@ func rulesLoad(dir string) ([]RuleSpec, map[string]map[string]struct{}, map[stri
 
 	err := func() error {
 		// First, evaluate the symlink to get the actual path
-		realPath, err := filepath.EvalSymlinks(dir)
+		realPath, err := filepath.EvalSymlinks(dir) // todo break symlink
 		if err != nil {
 			return fmt.Errorf("failed to evaluate symlink %s: %w", dir, err)
 		}
