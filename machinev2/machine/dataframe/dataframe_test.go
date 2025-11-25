@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/minbzk/poc-machine-law/machinev2/machine/dataframe"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/dataframe"
 )
 
 // Helper function to create test data

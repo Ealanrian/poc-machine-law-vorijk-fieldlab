@@ -3,7 +3,7 @@ package path
 import (
 	"context"
 
-	"github.com/minbzk/poc-machine-law/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
 )
 
 type Path struct {

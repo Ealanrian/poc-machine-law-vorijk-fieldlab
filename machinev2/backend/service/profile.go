@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/minbzk/poc-machine-law/machinev2/backend/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
 )
 
 var ErrProfileNotFound = errors.New("profile_not_found")

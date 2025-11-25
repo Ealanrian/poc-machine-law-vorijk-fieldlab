@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/minbzk/poc-machine-law/machinev2/machine/internal/utils"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/internal/utils"
 )
 
 type testCase struct {

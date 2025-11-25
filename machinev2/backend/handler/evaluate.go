@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/minbzk/poc-machine-law/machinev2/backend/handler/adapter"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/interface/api"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/handler/adapter"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/interface/api"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
 )
 
 // Evaluate implements api.StrictServerInterface.

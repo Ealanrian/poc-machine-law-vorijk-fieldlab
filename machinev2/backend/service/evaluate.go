@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/minbzk/poc-machine-law/machinev2/backend/model"
-	machinemodel "github.com/minbzk/poc-machine-law/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
+	machinemodel "github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
 )
 
 // Evaluate implements Servicer.

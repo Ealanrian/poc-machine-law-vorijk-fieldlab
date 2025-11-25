@@ -6,9 +6,9 @@ import (
 	"sync"
 
 	"github.com/google/uuid"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/casemanager"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/logger"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/casemanager"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
 )
 
 // ClaimManager manages claims against services.

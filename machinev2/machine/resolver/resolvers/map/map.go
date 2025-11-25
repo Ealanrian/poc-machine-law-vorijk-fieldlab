@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/minbzk/poc-machine-law/machinev2/machine/resolver"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/resolver"
 )
 
 var _ resolver.Resolver = &MapResolver{}

@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/minbzk/poc-machine-law/machinev2/backend/handler/adapter"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/interface/api"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/service"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/handler/adapter"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/interface/api"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/service"
 )
 
 // ProfileList implements api.StrictServerInterface.

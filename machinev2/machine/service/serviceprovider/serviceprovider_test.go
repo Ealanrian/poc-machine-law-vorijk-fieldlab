@@ -8,12 +8,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/minbzk/poc-machine-law/machinev2/machine/casemanager/manager"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/claimmanager/inmemory"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/dataframe"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/logger"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/ruleresolver"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/service/serviceprovider"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/casemanager/manager"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/claimmanager/inmemory"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/dataframe"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/ruleresolver"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/service/serviceprovider"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/require"
 )

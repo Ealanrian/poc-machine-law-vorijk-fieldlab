@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/looplab/eventhorizon/uuid"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/model"
-	machinemodel "github.com/minbzk/poc-machine-law/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
+	machinemodel "github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
 )
 
 // EventList implements Servicer.

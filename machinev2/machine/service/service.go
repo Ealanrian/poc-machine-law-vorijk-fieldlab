@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/minbzk/poc-machine-law/machinev2/machine/model"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/ruleresolver"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/serviceresolver"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/ruleresolver"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/serviceresolver"
 )
 
 // ServiceProvider interface defines what a service provider needs to implement

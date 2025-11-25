@@ -9,14 +9,14 @@ import (
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/oapi-codegen/runtime/types"
 
-	"github.com/minbzk/poc-machine-law/machinev2/machine/internal/typespec"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/logger"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/model"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/ruleresolver"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/service"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/service/ruleservice/httpservice/api"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/serviceresolver"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/trace"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/internal/typespec"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/ruleresolver"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/service"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/service/ruleservice/httpservice/api"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/serviceresolver"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/trace"
 )
 
 type HTTPService struct {

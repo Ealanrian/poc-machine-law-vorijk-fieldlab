@@ -1,8 +1,8 @@
-module github.com/minbzk/poc-machine-law/machinev2/backend
+module github.com/Ealanrian/poc-machine-law/machinev2/backend
 
 go 1.25.3
 
-replace github.com/minbzk/poc-machine-law/machinev2/machine => ../machine
+replace github.com/Ealanrian/poc-machine-law/machinev2/machine => ../machine
 
 require (
 	github.com/alecthomas/kong v1.12.1
@@ -10,7 +10,7 @@ require (
 	github.com/go-chi/chi/v5 v5.2.3
 	github.com/google/uuid v1.6.0
 	github.com/looplab/eventhorizon v0.16.0
-	github.com/minbzk/poc-machine-law/machinev2/machine v0.0.0-20251104122153-af7c2e651b8b
+	github.com/Ealanrian/poc-machine-law/machinev2/machine v0.0.0-20251104122153-af7c2e651b8b
 	github.com/oapi-codegen/runtime v1.1.2
 	github.com/prometheus/client_golang v1.23.2
 	github.com/sirupsen/logrus v1.9.3

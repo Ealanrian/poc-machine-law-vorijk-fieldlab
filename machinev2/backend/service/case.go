@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/looplab/eventhorizon/uuid"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/model"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/casemanager"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/casemanager"
 )
 
 // CaseListBasedOnBSN implements Servicer.

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/minbzk/poc-machine-law/machinev2/backend/interface/api"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/interface/api"
 )
 
 // ResetEngine implements api.StrictServerInterface.

@@ -12,10 +12,10 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/minbzk/poc-machine-law/machinev2/backend/config"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/interface/api"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/service"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/trace"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/config"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/interface/api"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/service"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/trace"
 	mdw "gitlab.com/digilab.overheid.nl/ecosystem/common/middleware"
 )
 

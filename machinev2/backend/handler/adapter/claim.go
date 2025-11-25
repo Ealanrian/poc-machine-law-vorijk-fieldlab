@@ -1,8 +1,8 @@
 package adapter
 
 import (
-	"github.com/minbzk/poc-machine-law/machinev2/backend/interface/api"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/interface/api"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
 )
 
 func FromClaim(claim model.Claim) api.Claim {

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	eh "github.com/looplab/eventhorizon"
-	"github.com/minbzk/poc-machine-law/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
 )
 
 // LoggingMiddleware is a tiny command handle middleware for logger.

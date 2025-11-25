@@ -3,8 +3,8 @@ package adapter
 import (
 	"fmt"
 
-	"github.com/minbzk/poc-machine-law/machinev2/backend/interface/api"
-	"github.com/minbzk/poc-machine-law/machinev2/backend/model"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/interface/api"
+	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
 )
 
 func FromPathNode(pathNode *model.PathNode) *api.PathNode {
