@@ -1,0 +1,333 @@
+$id: https://raw.githubusercontent.com/MinBZK/poc-machine-law/refs/heads/main/schema/v0.1.6/schema.json
+uuid: 7a9b3c5d-2e4f-8a6b-1d7c-9f3e5a2b8d4c
+name: Toeslagenwet
+law: toeslagenwet
+law_type: "FORMELE_WET"
+legal_character: "BESCHIKKING"
+decision_type: "BEPALING"
+discoverable: "CITIZEN"
+valid_from: 2022-01-01
+valid_until: 2026-06-30
+service: "UWV"
+description: >
+  De Toeslagenwet voorziet in een aanvulling op bepaalde uitkeringen tot het sociaal minimum.
+  De toeslag wordt verstrekt als aanvulling op uitkeringen zoals WW, ZW, WAO, WIA en Wajong
+  wanneer het totale inkomen van de uitkeringsgerechtigde en eventuele partner onder het
+  sociaal minimum komt. Deze specifieke variant bepaalt alleen het sociaal minimum
+
+legal_basis:
+  law: "Toeslagenwet"
+  bwb_id: "BWBR0004043"
+  article: "1"
+  url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01"
+  juriconnect: "jci1.3:c:BWBR0004043&z=2022-01-01&g=2022-01-01"
+  explanation: "De Toeslagenwet regelt aanvullingen op uitkeringen tot het sociaal minimum"
+
+references:
+  - law: "Toeslagenwet"
+    article: "2"
+    url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel2"
+  - law: "Toeslagenwet"
+    article: "4"
+    url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel4"
+  - law: "Toeslagenwet"
+    article: "5"
+    url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel5"
+
+properties:
+  parameters:
+    - name: "BSN"
+      description: "BSN van de uitkeringsgerechtigde"
+      type: "string"
+      required: true
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "2"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel2"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=2&z=2022-01-01&g=2022-01-01"
+        explanation: "Artikel 2 bepaalt dat de toeslag wordt toegekend aan de uitkeringsgerechtigde"
+
+  input:
+    - name: "HEEFT_PARTNER"
+      description: "Heeft een partner"
+      type: "boolean"
+      service_reference:
+        service: "RvIG"
+        field: "heeft_partner"
+        law: "wet_brp"
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "2"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel2"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=2&z=2022-01-01&g=2022-01-01"
+        explanation: "Artikel 2 bepaalt dat de gezinssituatie relevant is voor de toeslag"
+
+    - name: "HEEFT_WONINGDELER"
+      description: "Deelt woning"
+      type: "boolean"
+      service_reference:
+        service: "RvIG"
+        field: "heeft_woningdeler"
+        law: "wet_brp"
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "2"
+        url: "https://wetten.overheid.nl/BWBR0004043/2025-07-01/0#:~:text=Artikel%201%20Toeslagenwet"
+        juriconnect: "jci1.3:c:BWBR0004043&hoofdstuk=I&artikel=1&z=2025-07-01&g=2025-07-01"
+        explanation: "Artikel 1.4 bepaalt dat er sprake is van een gezamenlijke huishouding indien twee personen hun hoofdverblijf in dezelfde woning hebben en zij blijk geven zorg te dragen voor elkaar door middel van het leveren van een bijdrage in de kosten van de huishouding dan wel anderszins."
+
+    - name: "PARTNER_BSN"
+      description: "BSN van de partner (indien aanwezig)"
+      type: "string"
+      service_reference:
+        service: "RvIG"
+        field: "partner_bsn"
+        law: "wet_brp"
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "2"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel2"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=2&z=2022-01-01&g=2022-01-01"
+        explanation: "Partner BSN nodig voor bepalen leeftijd en type huishouding"
+
+    - name: "WONINGDELER_BSN"
+      description: "BSN van de woningdeler (indien aanwezig)"
+      type: "string"
+      service_reference:
+        service: "RvIG"
+        field: "woningdeler_bsn"
+        law: "wet_brp"
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "2"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel2"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=2&z=2022-01-01&g=2022-01-01"
+        explanation: "Woningdeler BSN nodig voor bepalen leeftijd en type huishouding"
+
+    - name: "LEEFTIJD"
+      description: "Leeftijd van de uitkeringsgerechtigde"
+      type: "number"
+      service_reference:
+        service: "RvIG"
+        field: "leeftijd"
+        law: "wet_brp"
+      type_spec:
+        precision: 0
+        min: 18
+        max: 120
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "4"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel4"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
+        explanation: "Artikel 4 bepaalt dat de leeftijd relevant is voor de hoogte van het sociaal minimum"
+
+    - name: "LEEFTIJD_PARTNER"
+      description: "Leeftijd van de partner"
+      type: "number"
+      service_reference:
+        service: "RvIG"
+        field: "leeftijd"
+        law: "wet_brp"
+      type_spec:
+        precision: 0
+        min: 18
+        max: 120
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "4"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel4"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
+        explanation: "Artikel 4 bepaalt dat de leeftijd partner relevant is voor de hoogte van het sociaal minimum"
+
+    - name: "LEEFTIJD_WONINGDELER"
+      description: "Leeftijd van de woningdeler"
+      type: "number"
+      service_reference:
+        service: "RvIG"
+        field: "leeftijd"
+        law: "wet_brp"
+      type_spec:
+        precision: 0
+        min: 18
+        max: 120
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "4"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel4"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
+        explanation: "Artikel 4 bepaalt dat de leeftijd woningdeler relevant is voor de hoogte van het sociaal minimum"
+
+
+  output:
+    - name: "sociaal_minimum"
+      description: "Toepasselijk sociaal minimum voor de situatie"
+      type: "amount"
+      type_spec:
+        unit: "eurocent"
+        precision: 0
+        min: 0
+      temporal:
+        type: "period"
+        period_type: "month"
+      citizen_relevance: secondary
+      legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "4"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel4"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
+        explanation: "Artikel 4 bepaalt het toepasselijke sociaal minimum"
+
+  definitions:
+    SOCIAAL_MINIMUM_ALLEENSTAAND_18:                74951  # €   749,51
+    SOCIAAL_MINIMUM_ALLEENSTAAND_19:                91720  # €   917,20
+    SOCIAAL_MINIMUM_ALLEENSTAAND_20:               125411  # € 1.254,11
+    SOCIAAL_MINIMUM_ALLEENSTAAND_21_AOW:           160493  # € 1.604,93
+    SOCIAAL_MINIMUM_PAAR_BEIDEN_21_AOW:            224580  # € 2.245,80
+    SOCIAAL_MINIMUM_WONINGDELER_1_PERSOON_21_AOW:  104117  # € 1.041,17
+    AOW_LEEFTIJD: 66  # AOW-leeftijd in 2022
+    MINIMUM_LEEFTIJD:                 18
+    MINIMUM_LEEFTIJD_BIJ_WONINGDELER: 21
+    MINIMUM_LEEFTIJD_PARTNER:         18
+    MINIMUM_LEEFTIJD_WONINGDELER:     27
+
+requirements:
+  - all:
+      # Leeftijdseis
+      - subject: "$LEEFTIJD"
+        operation: GREATER_OR_EQUAL
+        value: "$MINIMUM_LEEFTIJD"
+        legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "4"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel4"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
+        explanation: "Artikel 4 bepaalt het toepasselijke sociaal minimum"
+
+actions:
+  - output: "sociaal_minimum"
+    operation: GET
+    legal_basis:
+        law: "Toeslagenwet"
+        bwb_id: "BWBR0004043"
+        article: "4"
+        url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel4"
+        juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
+        explanation: "Artikel 4 bepaalt het toepasselijke sociaal minimum"
+    values:
+      # Bepaal leeftijdsgrenzen, partner en woningdeler
+      - operation: IF
+        legal_basis:
+            law: "Toeslagenwet"
+            bwb_id: "BWBR0004043"
+            article: "4"
+            url: "https://wetten.overheid.nl/BWBR0004043/2022-01-01#Artikel4"
+            juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
+            explanation: "Artikel 4 bepaalt het toepasselijke sociaal minimum"
+        conditions:
+          # Test op partner
+          - test:
+              subject: "$HEEFT_PARTNER"
+              operation: EQUALS
+              value: true
+            then:
+              operation: IF
+              conditions:
+                - test:
+                    subject: "$LEEFTIJD"
+                    operation: GREATER_OR_EQUAL
+                    value: "$MINIMUM_LEEFTIJD"
+                  then:
+                    operation: IF
+                    conditions:
+                      test:
+                        subject: "$LEEFTIJD_PARTNER"
+                        operation: GREATER_OR_EQUAL
+                        value: "$MINIMUM_LEEFTIJD_PARTNER"
+                      then:
+                        value:
+                          - "$SOCIAAL_MINIMUM_PAAR_BEIDEN_21_AOW"
+          # Test op woningdeler
+          - test:
+              subject: "$HEEFT_WONINGDELER"
+              operation: EQUALS
+              value: true
+            then:
+              operation: IF
+              conditions:
+                test:
+                  subject: "$LEEFTIJD"
+                  operation: GREATER_OR_EQUAL
+                  value: "$MINIMUM_LEEFTIJD_BIJ_WONINGDELER"
+                then:
+                  operation: IF
+                  conditions:
+                    test:
+                      subject: "$LEEFTIJD_WONINGDELER"
+                      operation: GREATER_OR_EQUAL
+                      value: "$MINIMUM_LEEFTIJD_WONINGDELER"
+                    then:
+                      value:
+                        - "$SOCIAAL_MINIMUM_WONINGDELER_1_PERSOON_21_AOW"
+          # Test op leeftijd
+          - test:
+              subject: "$LEEFTIJD"
+              operation: EQUAL
+              value: 21
+            then:
+              value:
+                - "$SOCIAAL_MINIMUM_ALLEENSTAAND_21_AOW"
+          - test:
+              subject: "$LEEFTIJD"
+              operation: EQUAL
+              value: 20
+            then:
+              value:
+                - "$SOCIAAL_MINIMUM_ALLEENSTAAND_20"
+          - test:
+              subject: "$LEEFTIJD"
+              operation: EQUAL
+              value: 19
+            then:
+              value:
+                - "$SOCIAAL_MINIMUM_ALLEENSTAAND_19"
+          - test:
+              subject: "$LEEFTIJD"
+              operation: EQUAL
+              value: 18
+            then:
+              value:
+                - "$SOCIAAL_MINIMUM_ALLEENSTAAND_18"
+          # Geen AOW grens ingesteld.
+          - else: 0

@@ -1,0 +1,535 @@
+schema_version: "0.1.6"
+uuid: b8f3d9e2-4c7a-4f1d-9a8b-1e5c6f2d3b4a
+name: Betalingsregeling Rijk
+law: beleidsregels_betalingsregelingen_rijk
+law_type: "FORMELE_WET"
+legal_character: "BESCHIKKING"
+decision_type: "TOEKENNING"
+discoverable: "CITIZEN"
+valid_from: 2025-01-01
+service: "CJIB"
+
+description: >
+  Regels voor het bepalen van het recht op en de voorwaarden voor een betalingsregeling 
+  bij rijksincassovorderingen volgens de Beleidsregels betalingsregelingen Rijk 2025.
+
+# Input:
+# - Sociaal minimum
+# - Inkomen
+# - Totale schuld
+# - Indicatie eerdere betalingsregeling niet nagekomen
+#
+# Output:
+# - Indicatie recht op betalingsregeling
+# - Afloscapaciteit
+# - Type regeling
+# - Termijn bedrag
+# - Aantal termijnen
+#
+# Stappen om te doorlopen:
+# - Bepaal het voorlopig aantal termijnen volgens staffel en het opgegeven schuldbedrag
+# - Bepaal het voorlopig termijnbedrag: schuldbedrag / voorlopig aantal termijnen
+# - Bepaal afloscapaciteit: opgegeven inkomen - opgegeven sociaal minimum
+# - Als afloscapacteit > 0
+#   - Als voorlopig termijnbedrag <= afloscapaciteit
+#     - regeling = standaard
+#     - aantal termijnen = voorlopig aantal termijnen
+#     - termijnbedrag = voorlopig termijnbedrag
+#   - Aders (voorlopig termijnbedrag is > afloscapaciteit)
+#     - voorlopig aantal termijnen = opgegeven schuld / afloscapacteit
+#     - Als voorlopig aantal termijnen < 72
+#       - regeling = maatwerk
+#       - aantal termijnen = voorlopig aantal termijnen
+#       - termijnbedrag = voorlopig termijnbedrag
+#     - Anders (voorlopig aantal termijnen >= 72) ==> sowieso moet hiervoor persoonlijke afspraken over gemaakts worden
+#       - regeling = draagkracht
+#       - aantal termijnen = voorlopig aantal termijnen
+#       - termijnbedrag = voorlopig termijnbedrag
+# - Anders
+#   - Geen automatische bepaling van betalingsregeling, contact opnemen met organisatie
+
+legal_basis:
+  law: "Beleidsregels betalingsregelingen Rijk 2025"
+  bwb_id: "BWBR0050600"
+  article: "3:2"
+  url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:2"
+  juriconnect: "jci1.3:c:BWBR0050600&artikel=3:2&z=2025-01-01&g=2025-01-01"
+  explanation: "Artikel 3:2 bepaalt de duur en vorm van betalingsregelingen"
+
+references:
+  - law: "Beleidsregels betalingsregelingen Rijk 2025"
+    article: "3:3"
+    url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:3"
+  - law: "Beleidsregels betalingsregelingen Rijk 2025"
+    article: "3:4"
+    url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:4"
+
+properties:
+  parameters:
+    - name: "BSN"
+      description: "BSN van de betalingsplichtige"
+      type: "string"
+      required: true
+      legal_basis:
+        law: "Algemene wet bestuursrecht"
+        bwb_id: "BWBR0005537"
+        article: "4:81"
+        url: "https://wetten.overheid.nl/BWBR0005537/2025-01-01"
+        juriconnect: "jci1.3:c:BWBR0005537&artikel=4:81&z=2025-01-01&g=2025-01-01"
+        explanation: "BSN is nodig voor identificatie van de betalingsplichtige"
+
+  sources:
+    - name: "SOCIAAL_MINIMUM"
+      required: true
+      description: "Sociaal minimum van de betalingsplichtige"
+      type: "amount"
+      type_spec:
+        unit: "eurocent"
+        precision: 0
+        min: 0
+      temporal:
+        type: "period"
+        period_type: "month"
+      source_reference:
+        source_type: "claim"
+        wallet_attribute: "sociaal_minimum"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "2:3"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:3"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=2:3&z=2025-01-01&g=2025-01-01"
+        explanation: "Sociaal minimum is nodig voor het bepalen van betalingscapaciteit"
+
+    - name: "INKOMEN"
+      required: true
+      description: "Maandelijks inkomen van de betalingsplichtige"
+      type: "amount"
+      type_spec:
+        unit: "eurocent"
+        precision: 0
+        min: 0
+      temporal:
+        type: "period"
+        period_type: "month"
+      source_reference:
+        source_type: "claim"
+        wallet_attribute: "maandelijks_inkomen"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "2:3"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:3"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=2:3&z=2025-01-01&g=2025-01-01"
+        explanation: "Inkomen is nodig voor het bepalen van betalingscapaciteit"
+
+    - name: "TOTALE_SCHULD"
+      required: true
+      description: "Totale openstaande schuld"
+      type: "amount"
+      type_spec:
+        unit: "eurocent"
+        precision: 0
+        min: 0
+      source_reference:
+        source_type: "claim"
+        wallet_attribute: "totale_schuld"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "2:4"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:4"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=2:4&z=2025-01-01&g=2025-01-01"
+        explanation: "Het totale schuldbedrag bepaalt het aantal termijnen"
+
+    - name: "EERDERE_REGELING_NIET_NAGEKOMEN"
+      required: true
+      description: "Indicatie of eerdere betalingsregeling verwijtbaar niet is nagekomen"
+      type: "boolean"
+      source_reference:
+        source_type: "claim"
+        wallet_attribute: "eerdere_regeling_niet_nagekomen"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "2:5"
+        paragraph: "2"
+        sentence: "a"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:5"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=2:5&lid=2&z=2025-01-01&g=2025-01-01"
+        explanation: "Eerdere nalatigheid kan leiden tot afwijzing van een nieuwe regeling"
+
+  output:
+    - name: "is_gerechtigd"
+      description: "Indicatie of recht op betalingsregeling bestaat"
+      type: "boolean"
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "3:2"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:2"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=3:2&z=2025-01-01&g=2025-01-01"
+        explanation: "Het recht op een betalingsregeling wordt bepaald door de voorwaarden in hoofdstuk 3"
+
+    - name: "afloscapaciteit"
+      description: "Maandelijkse afloscapaciteit"
+      type: "amount"
+      type_spec:
+        unit: "eurocent"
+        precision: 0
+        min: 0
+      temporal:
+        type: "period"
+        period_type: "month"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "2:3"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:3"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=2:3&z=2025-01-01&g=2025-01-01"
+        explanation: "Afloscapaciteit bepaalt wat de betalingsplichtige kan betalen"
+
+    - name: "type_regeling"
+      description: "Type betalingsregeling (standaard, maatwerk of draagkracht)"
+      type: "string"
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "3:2"
+        paragraph: "2"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:2"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=3:2&lid=2&z=2025-01-01&g=2025-01-01"
+        explanation: "Artikel 3:2 lid 2 onderscheidt standaardregeling en maatwerkregeling"
+
+    - name: "termijnbedrag"
+      description: "Maandelijks termijnbedrag"
+      type: "amount"
+      type_spec:
+        unit: "eurocent"
+        precision: 0
+        min: 0
+      temporal:
+        type: "period"
+        period_type: "month"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "3:3"
+        paragraph: "3"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:3"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=3:3&lid=3&z=2025-01-01&g=2025-01-01"
+        explanation: "Het termijnbedrag bepaalt het maandelijkse aflossingsbedrag"
+
+    - name: "aantal_termijnen"
+      description: "Aantal maandelijkse termijnen"
+      type: "number"
+      type_spec:
+        precision: 0
+        min: 1
+        max: 72
+      temporal:
+        type: "point_in_time"
+        reference: "$calculation_date"
+      legal_basis:
+        law: "Beleidsregels betalingsregelingen Rijk 2025"
+        bwb_id: "BWBR0050600"
+        article: "3:4"
+        paragraph: "3"
+        url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:4"
+        juriconnect: "jci1.3:c:BWBR0050600&artikel=3:4&lid=3&z=2025-01-01&g=2025-01-01"
+        explanation: "Artikel 3:4 lid 3 bepaalt dat een maatwerkregeling maximaal 72 maanden duurt"
+
+  definitions:
+    MINIMUM_SCHULD: 7500 # 75 euro - Artikel 2:5 lid 1 onder d
+    MAX_TERMIJNEN_STANDAARD: 36 # Artikel 3:3 lid 2
+    MAX_TERMIJNEN_MAATWERK: 72 # Artikel 3:4 lid 3
+
+    # Staffel voor standaardregeling (indicatief op basis van CJIB praktijk)
+    1_STAFFEL_MAX:  12000 # €  120
+    2_STAFFEL_MAX:  30000 # €  300
+    3_STAFFEL_MAX:  45000 # €  450
+    4_STAFFEL_MAX: 125000 # €1.250
+    5_STAFFEL_MAX: 200000 # €2.000
+    6_STAFFEL_MAX: 300000 # €3.000
+    7_STAFFEL_MAX: 400000 # €4.000
+
+    # Termijnen voor standaardregeling
+    AANTAL_MAANDEN_STAFFEL_1: 3  #maanden
+    AANTAL_MAANDEN_STAFFEL_2: 6  #maanden
+    AANTAL_MAANDEN_STAFFEL_3: 9  #maanden
+    AANTAL_MAANDEN_STAFFEL_4: 12 #maanden
+    AANTAL_MAANDEN_STAFFEL_5: 18 #maanden
+    AANTAL_MAANDEN_STAFFEL_6: 24 #maanden
+    AANTAL_MAANDEN_STAFFEL_7: 30 #maanden
+
+requirements:
+  - all:
+      # Minimaal schuldbedrag
+      - subject: "$TOTALE_SCHULD"
+        operation: GREATER_OR_EQUAL
+        value: "$MINIMUM_SCHULD"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "2:5"
+          paragraph: "1"
+          sentence: "d"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:5"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=2:5&lid=1&z=2025-01-01&g=2025-01-01"
+          explanation: "Betalingsregeling wordt niet toegestaan bij schuld onder 75 euro"
+
+      # Geen eerdere nalatigheid (of wel, maar dat wordt in de berekening meegenomen)
+      - subject: "$EERDERE_REGELING_NIET_NAGEKOMEN"
+        operation: EQUALS
+        value: false
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "2:5"
+          paragraph: "2"
+          sentence: "a"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:5"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=2:5&lid=2&z=2025-01-01&g=2025-01-01"
+          explanation: "Eerdere nalatigheid kan leiden tot afwijzing"
+
+actions:
+  # Bepaal afloscapaciteit
+  - output: "afloscapaciteit"
+    operation: SUBTRACT
+    legal_basis:
+      law: "Beleidsregels betalingsregelingen Rijk 2025"
+      bwb_id: "BWBR0050600"
+      article: "2:3"
+      url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:3"
+      juriconnect: "jci1.3:c:BWBR0050600&artikel=2:3&z=2025-01-01&g=2025-01-01"
+      explanation: "Afloscapaciteit is inkomen minus sociaal minimum"
+    values:
+      - "$INKOMEN"
+      - "$SOCIAAL_MINIMUM"
+
+  # Bepaal of er recht is op regeling en wat voor type
+  - output: "is_gerechtigd"
+    operation: IF
+    conditions:
+      - test:
+          operation: GREATER_THAN
+          values:
+            - "$afloscapaciteit"
+            - 0
+        then: true
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "2:3"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:3"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=2:3&z=2025-01-01&g=2025-01-01"
+          explanation: "Betalingsregeling mogelijk als afloscapaciteit positief is"
+      - else: false
+
+  # Bepaal voorlopig aantal termijnen uit staffel
+  - output: "voorlopig_aantal_termijnen"
+    operation: IF
+    legal_basis:
+      law: "Beleidsregels betalingsregelingen Rijk 2025"
+      bwb_id: "BWBR0050600"
+      article: "3:3"
+      paragraph: "3"
+      url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:3"
+      juriconnect: "jci1.3:c:BWBR0050600&artikel=3:3&lid=3&z=2025-01-01&g=2025-01-01"
+      explanation: "Aantal termijnen wordt bepaald volgens staffel"
+    conditions:
+      - test:
+          operation: LESS_THAN
+          values:
+            - "$TOTALE_SCHULD"
+            - "$1_STAFFEL_MAX"
+        then: "$AANTAL_MAANDEN_STAFFEL_1"
+      - test:
+          operation: LESS_THAN
+          values:
+            - "$TOTALE_SCHULD"
+            - "$2_STAFFEL_MAX"
+        then: "$AANTAL_MAANDEN_STAFFEL_2"
+      - test:
+          operation: LESS_THAN
+          values:
+            - "$TOTALE_SCHULD"
+            - "$3_STAFFEL_MAX"
+        then: "$AANTAL_MAANDEN_STAFFEL_3"
+      - test:
+          operation: LESS_THAN
+          values:
+            - "$TOTALE_SCHULD"
+            - "$4_STAFFEL_MAX"
+        then: "$AANTAL_MAANDEN_STAFFEL_4"
+      - test:
+          operation: LESS_THAN
+          values:
+            - "$TOTALE_SCHULD"
+            - "$5_STAFFEL_MAX"
+        then: "$AANTAL_MAANDEN_STAFFEL_5"
+      - test:
+          operation: LESS_THAN
+          values:
+            - "$TOTALE_SCHULD"
+            - "$6_STAFFEL_MAX"
+        then: "$AANTAL_MAANDEN_STAFFEL_6"
+      - test:
+          operation: LESS_THAN
+          values:
+            - "$TOTALE_SCHULD"
+            - "$7_STAFFEL_MAX"
+        then: "$AANTAL_MAANDEN_STAFFEL_7"
+      - else: "$MAX_TERMIJNEN_STANDAARD"
+
+  # Bepaal voorlopig termijnbedrag
+  - output: "voorlopig_termijnbedrag"
+    operation: DIVIDE
+    legal_basis:
+      law: "Beleidsregels betalingsregelingen Rijk 2025"
+      bwb_id: "BWBR0050600"
+      article: "3:3"
+      paragraph: "3"
+      url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:3"
+      juriconnect: "jci1.3:c:BWBR0050600&artikel=3:3&lid=3&z=2025-01-01&g=2025-01-01"
+      explanation: "Termijnbedrag is schuld gedeeld door aantal termijnen"
+    values:
+      - "$TOTALE_SCHULD"
+      - "$voorlopig_aantal_termijnen"
+
+  # Bepaal type regeling, termijnbedrag en aantal termijnen
+  - output: "type_regeling"
+    operation: IF
+    conditions:
+      # Als afloscapaciteit <= 0: geen automatische regeling
+      - test:
+          operation: LESS_OR_EQUAL
+          values:
+            - "$afloscapaciteit"
+            - 0
+        then: "geen_automatische_regeling"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "2:3"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk2_Artikel2:3"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=2:3&z=2025-01-01&g=2025-01-01"
+          explanation: "Zonder afloscapaciteit geen automatische regeling"
+      # Als voorlopig termijnbedrag <= afloscapaciteit: standaard
+      - test:
+          operation: LESS_OR_EQUAL
+          values:
+            - "$voorlopig_termijnbedrag"
+            - "$afloscapaciteit"
+        then: "standaard"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "3:3"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:3"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=3:3&z=2025-01-01&g=2025-01-01"
+          explanation: "Standaardregeling als termijnbedrag betaalbaar is"
+      # Anders: kijk of maatwerk mogelijk is (< 72 maanden)
+      - test:
+          operation: LESS_THAN
+          values:
+            - operation: DIVIDE
+              values:
+                - "$TOTALE_SCHULD"
+                - "$afloscapaciteit"
+            - "$MAX_TERMIJNEN_MAATWERK"
+        then: "maatwerk"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "3:4"
+          paragraph: "1"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:4"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=3:4&lid=1&z=2025-01-01&g=2025-01-01"
+          explanation: "Maatwerkregeling bij bijzondere omstandigheden binnen 72 maanden"
+      # Anders: draagkrachtregeling
+      - else: "draagkracht"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "3:4"
+          paragraph: "4"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:4"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=3:4&lid=4&z=2025-01-01&g=2025-01-01"
+          explanation: "Draagkrachtregeling als maatwerk niet mogelijk is"
+
+  - output: "aantal_termijnen"
+    operation: IF
+    conditions:
+      # Standaard: voorlopig aantal termijnen
+      - test:
+          operation: EQUALS
+          values:
+            - "$type_regeling"
+            - "standaard"
+        then: "$voorlopig_aantal_termijnen"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "3:3"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:3"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=3:3&z=2025-01-01&g=2025-01-01"
+          explanation: "Standaardregeling volgt staffel"
+      # Maatwerk of draagkracht: schuld / afloscapaciteit
+      - test:
+          operation: IN
+          subject: "$type_regeling"
+          values: ["maatwerk", "draagkracht"]
+        then:
+          operation: DIVIDE
+          values:
+            - "$TOTALE_SCHULD"
+            - "$afloscapaciteit"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "3:4"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:4"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=3:4&z=2025-01-01&g=2025-01-01"
+          explanation: "Maatwerkregeling op basis van afloscapaciteit"
+      # Geen regeling: 0
+      - else: 0
+
+  - output: "termijnbedrag"
+    operation: IF
+    conditions:
+      # Standaard: voorlopig termijnbedrag
+      - test:
+          operation: EQUALS
+          values:
+            - "$type_regeling"
+            - "standaard"
+        then: "$voorlopig_termijnbedrag"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "3:3"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:3"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=3:3&z=2025-01-01&g=2025-01-01"
+          explanation: "Standaardregeling gebruikt vaste termijnbedragen"
+      # Maatwerk of draagkracht: afloscapaciteit
+      - test:
+          operation: IN
+          subject: "$type_regeling"
+          values: ["maatwerk", "draagkracht"]
+        then: "$afloscapaciteit"
+        legal_basis:
+          law: "Beleidsregels betalingsregelingen Rijk 2025"
+          bwb_id: "BWBR0050600"
+          article: "3:4"
+          url: "https://wetten.overheid.nl/BWBR0050600/2025-01-01/0#Hoofdstuk3_Artikel3:4"
+          juriconnect: "jci1.3:c:BWBR0050600&artikel=3:4&z=2025-01-01&g=2025-01-01"
+          explanation: "Maatwerkregeling gebruikt afloscapaciteit als termijnbedrag"
+      # Geen regeling: 0
+      - else: 0
