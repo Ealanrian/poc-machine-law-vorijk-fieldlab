@@ -3,8 +3,8 @@ package source
 import (
 	"context"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/resolver"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/resolver"
 )
 
 type ExternalClaimResolver struct {

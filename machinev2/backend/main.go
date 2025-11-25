@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/cmd"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/cmd"
 )
 
 func main() {

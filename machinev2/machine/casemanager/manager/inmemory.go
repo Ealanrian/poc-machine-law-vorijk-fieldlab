@@ -11,10 +11,10 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/casemanager"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/service"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/casemanager"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/service"
 
 	eh "github.com/looplab/eventhorizon"
 	"github.com/looplab/eventhorizon/commandhandler/bus"

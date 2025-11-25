@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/looplab/eventhorizon/uuid"
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
-	machinemodel "github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/model"
+	machinemodel "github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/model"
 )
 
 func (service *Service) ClaimListBasedOnBSN(ctx context.Context, bsn string, filter ClaimListFilter) ([]model.Claim, error) {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/interface/api"
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/interface/api"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/model"
 )
 
 // SetSourceDataFrame implements api.StrictServerInterface.

@@ -11,11 +11,11 @@ import (
 
 	"github.com/Khan/genqlient/graphql"
 	"github.com/google/uuid"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/claimmanager"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/claimmanager/ace/generated"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/ruleresolver"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/claimmanager"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/claimmanager/ace/generated"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/ruleresolver"
 )
 
 // ClaimManager implements the claimmanager interface using ACE

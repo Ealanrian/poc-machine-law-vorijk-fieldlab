@@ -9,7 +9,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/logger"
 )
 
 type defaultResolver struct {

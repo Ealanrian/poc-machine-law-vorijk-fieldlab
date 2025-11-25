@@ -1,8 +1,8 @@
 package local
 
 import (
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/resolver"
-	resolvermap "github.com/Ealanrian/poc-machine-law/machinev2/machine/resolver/resolvers/map"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/resolver"
+	resolvermap "github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/resolver/resolvers/map"
 )
 
 var _ resolver.Resolver = &LocalResolver{}

@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/alecthomas/kong"
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/model"
 	"gopkg.in/yaml.v3"
 )
 

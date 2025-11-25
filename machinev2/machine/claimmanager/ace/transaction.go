@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/claimmanager/ace/generated"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/claimmanager/ace/generated"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/logger"
 )
 
 func (cm *ClaimManager) beginTransaction(ctx context.Context) (string, error) {

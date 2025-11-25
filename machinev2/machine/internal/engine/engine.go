@@ -7,17 +7,17 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/casemanager"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/claimmanager"
-	contexter "github.com/Ealanrian/poc-machine-law/machinev2/machine/internal/context"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/internal/context/path"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/internal/context/tracker"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/internal/typespec"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/internal/utils"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/ruleresolver"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/service"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/casemanager"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/claimmanager"
+	contexter "github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/internal/context"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/internal/context/path"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/internal/context/tracker"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/internal/typespec"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/internal/utils"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/ruleresolver"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/service"
 )
 
 // RulesEngine evaluates business rules

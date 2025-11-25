@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/model"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/dataframe"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/model"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/dataframe"
 )
 
 // SetSourceDataFrame implements Servicer.

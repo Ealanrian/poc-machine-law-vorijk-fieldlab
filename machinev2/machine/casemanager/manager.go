@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/model"
 )
 
 // CaseManager interface defines the contract for case management operations.

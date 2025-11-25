@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/config"
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/handler"
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/process"
-	"github.com/Ealanrian/poc-machine-law/machinev2/backend/service"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/config"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/handler"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/process"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/backend/service"
 )
 
 type ServeCmd struct {

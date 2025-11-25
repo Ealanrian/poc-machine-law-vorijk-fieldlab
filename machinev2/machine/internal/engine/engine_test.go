@@ -3,7 +3,7 @@ package engine
 import (
 	"testing"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/ruleresolver"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/ruleresolver"
 )
 
 func TestAnalyzeDependencies(t *testing.T) {

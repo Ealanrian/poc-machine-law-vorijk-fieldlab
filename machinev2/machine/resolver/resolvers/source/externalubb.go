@@ -10,11 +10,11 @@ import (
 	"time"
 
 	"github.com/Khan/genqlient/graphql"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/internal/typespec"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/logger"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/model"
-	machine "github.com/Ealanrian/poc-machine-law/machinev2/machine/resolver/resolvers/source/generated"
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/ruleresolver"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/internal/typespec"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/logger"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/model"
+	machine "github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/resolver/resolvers/source/generated"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/ruleresolver"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )

@@ -1,4 +1,4 @@
-module github.com/Ealanrian/poc-machine-law/machinev2/machine
+module github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine
 
 go 1.25.3
 

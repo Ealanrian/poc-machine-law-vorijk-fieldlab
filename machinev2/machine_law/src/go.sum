@@ -36,10 +36,10 @@ github.com/klauspost/cpuid/v2 v2.3.0 h1:S4CRMLnYUhGeDFDqkGriYKdfoFlDnMtqTiI/sFzh
 github.com/klauspost/cpuid/v2 v2.3.0/go.mod h1:hqwkgyIinND0mEev00jJYCxPNVRVXFQeu1XKlok6oO0=
 github.com/looplab/eventhorizon v0.16.0 h1:p7YEdBGvNloZU39lnANqv4A4hUkNAtY8PTyJJW2PYMA=
 github.com/looplab/eventhorizon v0.16.0/go.mod h1:ym7NXMZtXypXMQgEavLerP3LfESP+WKZplFvSXxcvMc=
-github.com/Ealanrian/poc-machine-law/machinev2/machine v0.0.0-20251124122804-d7c2ded9b5ff h1:FdOvYYb86cx64fh6n09ldEj6hJEDu6DaEa6bFnpreIo=
-github.com/Ealanrian/poc-machine-law/machinev2/machine v0.0.0-20251124122804-d7c2ded9b5ff/go.mod h1:DYqyEvea4x7IVK9r++6PdnKYueWds/cSrKLwDQo8EWU=
-github.com/Ealanrian/poc-machine-law/machinev2/machine v0.0.0-20251124152009-09a420ffc71e h1:Tby0z/47wQylXHD4xy/U7qEEfviYC+cKqW7FGrt5J6k=
-github.com/Ealanrian/poc-machine-law/machinev2/machine v0.0.0-20251124152009-09a420ffc71e/go.mod h1:DYqyEvea4x7IVK9r++6PdnKYueWds/cSrKLwDQo8EWU=
+github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine v0.0.0-20251124122804-d7c2ded9b5ff h1:FdOvYYb86cx64fh6n09ldEj6hJEDu6DaEa6bFnpreIo=
+github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine v0.0.0-20251124122804-d7c2ded9b5ff/go.mod h1:DYqyEvea4x7IVK9r++6PdnKYueWds/cSrKLwDQo8EWU=
+github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine v0.0.0-20251124152009-09a420ffc71e h1:Tby0z/47wQylXHD4xy/U7qEEfviYC+cKqW7FGrt5J6k=
+github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine v0.0.0-20251124152009-09a420ffc71e/go.mod h1:DYqyEvea4x7IVK9r++6PdnKYueWds/cSrKLwDQo8EWU=
 github.com/oapi-codegen/runtime v1.1.2 h1:P2+CubHq8fO4Q6fV1tqDBZHCwpVpvPg7oKiYzQgXIyI=
 github.com/oapi-codegen/runtime v1.1.2/go.mod h1:SK9X900oXmPWilYR5/WKPzt3Kqxn/uS/+lbpREv+eCg=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=

@@ -3,7 +3,7 @@ package resolver
 import (
 	"context"
 
-	"github.com/Ealanrian/poc-machine-law/machinev2/machine/ruleresolver"
+	"github.com/Ealanrian/poc-machine-law-vorijk-fieldlab/machinev2/machine/ruleresolver"
 )
 
 type Resolved struct {
