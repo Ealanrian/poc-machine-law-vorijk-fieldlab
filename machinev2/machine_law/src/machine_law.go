@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 	"time"
 	"unsafe"
 
@@ -23,6 +24,8 @@ import (
 import "C"
 
 var services *serviceprovider.Services
+var once sync.Once
+
 var started = false
 
 //export machineLawStandalone
@@ -117,12 +120,6 @@ func EvaluateBetalingsRegelingRijk(bsn C.struct_String_t, sociaalminimum C.uint3
 	} else {
 		evalParams["EERDERE_REGELING_NIET_NAGEKOMEN"] = false
 	}
-
-	caseManager := manager.New(logger)
-	claimManager := inmemory.New(logger, caseManager)
-	ruleResolver, _ := ruleresolver.New()
-
-	services, _ := serviceprovider.New(logger, time.Now(), caseManager, claimManager, ruleResolver, serviceprovider.WithRuleServiceInMemory(), serviceprovider.WithOrganizationName("vorijkapp"))
 
 	serviceString := "CJIB"
 	lawString := "beleidsregels_betalingsregelingen_rijk"

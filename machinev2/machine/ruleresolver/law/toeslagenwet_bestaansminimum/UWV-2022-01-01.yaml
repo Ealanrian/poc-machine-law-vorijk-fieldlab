@@ -237,7 +237,6 @@ requirements:
 
 actions:
   - output: "sociaal_minimum"
-    #operation: GET
     legal_basis:
         law: "Toeslagenwet"
         bwb_id: "BWBR0004043"
@@ -246,7 +245,6 @@ actions:
         juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
         explanation: "Artikel 4 bepaalt het toepasselijke sociaal minimum"
     values:
-      # Bepaal leeftijdsgrenzen, partner en woningdeler
       - operation: IF
         legal_basis:
             law: "Toeslagenwet"
@@ -256,78 +254,101 @@ actions:
             juriconnect: "jci1.3:c:BWBR0004043&artikel=4&z=2022-01-01&g=2022-01-01"
             explanation: "Artikel 4 bepaalt het toepasselijke sociaal minimum"
         conditions:
-          # Test op partner
+          # OPTION 1: Partner - both 21+ (flattened with AND logic)
           - test:
-              subject: "$HEEFT_PARTNER"
-              operation: EQUALS
-              value: true
+              all:
+                - subject: "$HEEFT_PARTNER"
+                  operation: EQUALS
+                  value: true
+                - subject: "$LEEFTIJD"
+                  operation: GREATER_OR_EQUAL
+                  value: "$MINIMUM_LEEFTIJD"
+                - subject: "$LEEFTIJD_PARTNER"
+                  operation: GREATER_OR_EQUAL
+                  value: "$MINIMUM_LEEFTIJD_PARTNER"
             then:
-              operation: IF
-              conditions:
-                - test:
-                    subject: "$LEEFTIJD"
-                    operation: GREATER_OR_EQUAL
-                    value: "$MINIMUM_LEEFTIJD"
-                  then:
-                    operation: IF
-                    conditions:
-                      test:
-                        subject: "$LEEFTIJD_PARTNER"
-                        operation: GREATER_OR_EQUAL
-                        value: "$MINIMUM_LEEFTIJD_PARTNER"
-                      then:
-                        value:
-                          - "$SOCIAAL_MINIMUM_PAAR_BEIDEN_21_AOW"
-          # Test op woningdeler
+              value:
+                - "$SOCIAAL_MINIMUM_PAAR_BEIDEN_21_AOW"
+
+          # OPTION 2: Woningdeler - both meet age requirements (flattened with AND logic)
           - test:
-              subject: "$HEEFT_WONINGDELER"
-              operation: EQUALS
-              value: true
-            then:
-              operation: IF
-              conditions:
-                test:
-                  subject: "$LEEFTIJD"
+              all:
+                - subject: "$HEEFT_WONINGDELER"
+                  operation: EQUALS
+                  value: true
+                - subject: "$LEEFTIJD"
                   operation: GREATER_OR_EQUAL
                   value: "$MINIMUM_LEEFTIJD_BIJ_WONINGDELER"
-                then:
-                  operation: IF
-                  conditions:
-                    test:
-                      subject: "$LEEFTIJD_WONINGDELER"
-                      operation: GREATER_OR_EQUAL
-                      value: "$MINIMUM_LEEFTIJD_WONINGDELER"
-                    then:
-                      value:
-                        - "$SOCIAAL_MINIMUM_WONINGDELER_1_PERSOON_21_AOW"
-          # Test op leeftijd
+                - subject: "$LEEFTIJD_WONINGDELER"
+                  operation: GREATER_OR_EQUAL
+                  value: "$MINIMUM_LEEFTIJD_WONINGDELER"
+            then:
+              value:
+                - "$SOCIAAL_MINIMUM_WONINGDELER_1_PERSOON_21_AOW"
+
+          # OPTION 3: Alleenstaand - age 21+ (explicit check for no partner/woningdeler)
           - test:
-              subject: "$LEEFTIJD"
-              operation: EQUAL
-              value: 21
+              all:
+                - subject: "$HEEFT_PARTNER"
+                  operation: EQUALS
+                  value: false
+                - subject: "$HEEFT_WONINGDELER"
+                  operation: EQUALS
+                  value: false
+                - subject: "$LEEFTIJD"
+                  operation: GREATER_OR_EQUAL
+                  value: 21
             then:
               value:
                 - "$SOCIAAL_MINIMUM_ALLEENSTAAND_21_AOW"
+
+          # OPTION 4: Alleenstaand - age 20 (explicit check for no partner/woningdeler)
           - test:
-              subject: "$LEEFTIJD"
-              operation: EQUAL
-              value: 20
+              all:
+                - subject: "$HEEFT_PARTNER"
+                  operation: EQUALS
+                  value: false
+                - subject: "$HEEFT_WONINGDELER"
+                  operation: EQUALS
+                  value: false
+                - subject: "$LEEFTIJD"
+                  operation: EQUAL
+                  value: 20
             then:
               value:
                 - "$SOCIAAL_MINIMUM_ALLEENSTAAND_20"
+
+          # OPTION 5: Alleenstaand - age 19 (explicit check for no partner/woningdeler)
           - test:
-              subject: "$LEEFTIJD"
-              operation: EQUAL
-              value: 19
+              all:
+                - subject: "$HEEFT_PARTNER"
+                  operation: EQUALS
+                  value: false
+                - subject: "$HEEFT_WONINGDELER"
+                  operation: EQUALS
+                  value: false
+                - subject: "$LEEFTIJD"
+                  operation: EQUAL
+                  value: 19
             then:
               value:
                 - "$SOCIAAL_MINIMUM_ALLEENSTAAND_19"
+
+          # OPTION 6: Alleenstaand - age 18 (explicit check for no partner/woningdeler)
           - test:
-              subject: "$LEEFTIJD"
-              operation: EQUAL
-              value: 18
+              all:
+                - subject: "$HEEFT_PARTNER"
+                  operation: EQUALS
+                  value: false
+                - subject: "$HEEFT_WONINGDELER"
+                  operation: EQUALS
+                  value: false
+                - subject: "$LEEFTIJD"
+                  operation: EQUAL
+                  value: 18
             then:
               value:
                 - "$SOCIAAL_MINIMUM_ALLEENSTAAND_18"
-          # Geen AOW grens ingesteld.
+
+          # Fallback
           - else: 0
