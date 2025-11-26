@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  ffi: ^2.0.2
   machine_law:
     # When depending on this package from a real application you should use:
     #   machine_law: ^x.y.z

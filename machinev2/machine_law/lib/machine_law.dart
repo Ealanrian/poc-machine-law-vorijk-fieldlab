@@ -25,17 +25,33 @@ int machineLawEvaluate() {
   final servicename = "TOESLAGEN";
   final Pointer<String_t> service = createStringPointer(servicename);
   final Pointer<String_t> law = createStringPointer("zorgtoeslagwet");
-  final Pointer<Machine_law_Params_t> parameters = createParametersPointer();
-
-
-  Machine_law_Result_t result =_bindings.Evaluate(service.ref, law.ref, parameters, referenceDate, effectiveDate, overwriteInput, requestedOutput, approved);
+  Pointer<Machine_law_Params_t> parameters = createParametersPointer("bsn:100000001");
+  final Pointer<String_t> referenceDate = createStringPointer("");
+  final Pointer<String_t> effectiveDate = createStringPointer("");
+  final Pointer<Machine_law_Params_t> overwriteInput = createParametersPointer("bsn:100000001");
+  Machine_law_Result_t result =_bindings.Evaluate(service.ref, law.ref, parameters.ref, referenceDate.ref,
+      effectiveDate.ref, overwriteInput.ref);
 
 
   freeString(service);
   freeString(law);
-  return 0;
+  return result.resultCode;
 }
 
+
+int evalBetalingsRegeling() {
+  final Pointer<String_t> bsn = createStringPointer("100000001");
+  final int sociaalMinimum = 10000;
+  final int inkomen = 100;
+  final int totaleschuld = 10000000;
+  final int nietNagekomen = 0;
+
+  Machine_law_Result_t result =_bindings.EvaluateBetalingsRegelingRijk(bsn.ref,sociaalMinimum,inkomen, totaleschuld,nietNagekomen);
+
+  return result.resultCode;
+
+  //EvaluateBetalingsRegelingRijk
+}
 
 Pointer<String_t> createStringPointer(String string){
   final Pointer<Uint8> stringPointer = calloc<Uint8>(string.length);
@@ -51,15 +67,30 @@ void freeString(Pointer<String_t> pointer) {
   calloc.free(pointer);
 }
 
-Pointer<Machine_law_Params_t> createParametersPointer() {
+Pointer<Machine_law_Params_t> createParametersPointer(String parameters) {
   final Pointer<Machine_law_Params_t> cParams = calloc<Machine_law_Params_t>();
-  cParams.ref.numParams = 0;
-  cParams.ref.params = calloc<Machine_law_param_t>(10);
-  final Pointer<Machine_law_param_t> cParam = calloc<Machine_law_param_t>(10);
-  cParam.asTypedList()
-
+  cParams.ref.params = createStringPointer(parameters).ref;
   return cParams;
 }
+/*
+Pointer<Machine_law_param_t> createParameterPointer(String name, String value ) {
+  final Pointer<Machine_law_param_t> cParam = calloc<Machine_law_param_t>();
+  cParam.ref.paramName = createStringPointer(name).ref;
+  cParam.ref.paramValue = createStringPointer(value).ref;
+  return cParam;
+}
+
+Pointer<Machine_law_Params_t> addParam(Pointer<Machine_law_Params_t> params, String name, String value) {
+  if (params.ref.numParams >0 ) {
+    int num = params.ref.numParams;
+    params.ref.params[num] = createParameterPointer(name, value).ref;
+    params.ref.numParams = num++;
+  } else {
+    params.ref.params[0] = createParameterPointer(name, value).ref;
+    params.ref.numParams = 1;
+  }
+  return params;
+}*/
 
 /// A longer lived native function, which occupies the thread calling it.
 ///

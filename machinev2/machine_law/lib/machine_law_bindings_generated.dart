@@ -33,8 +33,6 @@ class MachineLawBindings {
     String_t referenceDate,
     String_t effectiveDate,
     Machine_law_Params_t overwriteInput,
-    String_t requestedOutput,
-    int approved,
   ) {
     return _Evaluate(
       service,
@@ -43,8 +41,6 @@ class MachineLawBindings {
       referenceDate,
       effectiveDate,
       overwriteInput,
-      requestedOutput,
-      approved,
     );
   }
 
@@ -58,8 +54,6 @@ class MachineLawBindings {
             String_t,
             String_t,
             Machine_law_Params_t,
-            String_t,
-            ffi.Int,
           )
         >
       >('Evaluate');
@@ -72,7 +66,89 @@ class MachineLawBindings {
           String_t,
           String_t,
           Machine_law_Params_t,
+        )
+      >();
+
+  Machine_law_Result_t EvaluateBetalingsRegelingRijk(
+    String_t bsn,
+    int sociaalMinimum,
+    int inkomen,
+    int totaleSchuld,
+    int eerdereRegelingNietNagekomen,
+  ) {
+    return _EvaluateBetalingsRegelingRijk(
+      bsn,
+      sociaalMinimum,
+      inkomen,
+      totaleSchuld,
+      eerdereRegelingNietNagekomen,
+    );
+  }
+
+  late final _EvaluateBetalingsRegelingRijkPtr =
+      _lookup<
+        ffi.NativeFunction<
+          Machine_law_Result_t Function(
+            String_t,
+            ffi.Uint32,
+            ffi.Uint32,
+            ffi.Uint32,
+            ffi.Int,
+          )
+        >
+      >('EvaluateBetalingsRegelingRijk');
+  late final _EvaluateBetalingsRegelingRijk =
+      _EvaluateBetalingsRegelingRijkPtr.asFunction<
+        Machine_law_Result_t Function(String_t, int, int, int, int)
+      >();
+
+  Machine_law_Result_t EvaluateToeslagenWetBestaansMinimum(
+    String_t bsn,
+    int partner,
+    int woningdeler,
+    String_t bsnPartner,
+    String_t woningdelerBsn,
+    int leeftijd,
+    int leeftijdPartner,
+    int leeftijdWoningDeler,
+  ) {
+    return _EvaluateToeslagenWetBestaansMinimum(
+      bsn,
+      partner,
+      woningdeler,
+      bsnPartner,
+      woningdelerBsn,
+      leeftijd,
+      leeftijdPartner,
+      leeftijdWoningDeler,
+    );
+  }
+
+  late final _EvaluateToeslagenWetBestaansMinimumPtr =
+      _lookup<
+        ffi.NativeFunction<
+          Machine_law_Result_t Function(
+            String_t,
+            ffi.Int,
+            ffi.Int,
+            String_t,
+            String_t,
+            ffi.Uint8,
+            ffi.Uint8,
+            ffi.Uint8,
+          )
+        >
+      >('EvaluateToeslagenWetBestaansMinimum');
+  late final _EvaluateToeslagenWetBestaansMinimum =
+      _EvaluateToeslagenWetBestaansMinimumPtr.asFunction<
+        Machine_law_Result_t Function(
           String_t,
+          int,
+          int,
+          String_t,
+          String_t,
+          int,
+          int,
           int,
         )
       >();
@@ -116,18 +192,8 @@ final class String_t extends ffi.Struct {
   external ffi.Pointer<ffi.Uint8> string;
 }
 
-final class Machine_law_param_t extends ffi.Struct {
-  external String_t paramName;
-
-  external String_t paramValue;
-}
-
 final class Machine_law_Params_t extends ffi.Struct {
-  /// Define the structure for parameters
-  @ffi.Int()
-  external int numParams;
-
-  external ffi.Pointer<Machine_law_param_t> params;
+  external String_t params;
 }
 
 final class Machine_law_Result_t extends ffi.Struct {

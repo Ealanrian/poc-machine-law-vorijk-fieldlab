@@ -65,15 +65,16 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () async {
                     bool? success;
                     try {
-                      machine_law.startMachineLawEngine();
-                      result = "machine started";
+                      int eval = machine_law.machineLawEvaluate();
+
+                      result = "Law result: "+eval.toString();
                     } catch (error) {
                       result = "It failed "+error.toString();
                     }
 
                     await setResultState(result);
                   },
-                  child: const Text('start engine'),
+                  child: const Text('Eval Law'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -94,6 +95,22 @@ class _MyAppState extends State<MyApp> {
                     await setResultState(result);
                   },
                   child: const Text('check state'),
+                ),
+                spacerSmall,
+                ElevatedButton(
+                  onPressed: () async {
+                    bool? success;
+                    try {
+                      int eval = machine_law.evalBetalingsRegeling();
+
+                      result = "Law result: "+eval.toString();
+                    } catch (error) {
+                      result = "It failed "+error.toString();
+                    }
+
+                    await setResultState(result);
+                  },
+                  child: const Text('Eval BetalingsRegeling'),
                 ),
                 const Divider(),
                 const Text(
