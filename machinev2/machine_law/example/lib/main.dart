@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () async {
                     bool? success;
                     try {
-                      String eval = machine_law.evalBetalingsRegeling("100000001", 1000, 100, 1000000, false);
+                      String eval = machine_law.evalBetalingsRegeling("100000001", 1000, 1100, 1000000, false);
 
                       result = "Law result: "+eval.toString();
                     } catch (error) {

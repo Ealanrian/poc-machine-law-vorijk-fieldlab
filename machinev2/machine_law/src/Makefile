@@ -31,7 +31,7 @@ else
 endif
 
 
-NDK_BIN ?= $(subst \,/,$(ANDROID_HOME))/ndk/$(NDK_VERSION)/toolchains/llvm/prebuilt/$(NDK_PLATFORM)/bin
+NDK_BIN ?= /home/erik/Android/Sdk/ndk/$(NDK_VERSION)/toolchains/llvm/prebuilt/$(NDK_PLATFORM)/bin
 #Check if the NDK is found.
 
 NDK_EXISTS := $(if $(wildcard $(NDK_BIN)),true,false)
@@ -88,7 +88,7 @@ release:
 
 
 ANDROID_OUT=../android/src/main/jniLibs
-NDK_BIN=$(ANDROID_NDK_PATH)/toolchains/llvm/prebuilt/linux-x86_64/bin
+NDK_BIN=/home/erik/Android/Sdk/ndk/$(NDK_VERSION)/toolchains/llvm/prebuilt/linux-x86_64/bin
 LIB_NAME=machine_law
 
 android-armv7a: CURRENT_ARCH := armeabi-v7a
@@ -109,7 +109,7 @@ android-arm64:
 	GOARCH=arm64 \
 	CC=$(NDK_BIN)/aarch64-linux-android21-clang \
 	go build $(GO_BUILD_FLAGS) -buildmode=c-shared -o $(PREBUILD_PATH)/$(CURRENT_ARCH)/${LIB_NAME}.so .
-	rm $(PREBUILD_PATH)/$(CURRENT_ARCH)/${LIB_NAME}.h
+	rm $(PREBUILD_PATH)/Android/${LIB_NAME}.h
 
 android-x86: CURRENT_ARCH := x86
 android-x86:

@@ -100,8 +100,12 @@ func Evaluate(service C.struct_String_t, law C.struct_String_t, parameters C.str
 
 //export EvaluateBetalingsRegelingRijk
 func EvaluateBetalingsRegelingRijk(bsn C.struct_String_t, sociaalminimum C.uint32_t, inkomen C.uint32_t, totaleSchuld C.uint32_t, eerdereRegelingNietNagekomen C.int) C.struct_Machine_law_Result_t {
+	logger := logger.New("main", os.Stdout, logrus.DebugLevel)
 	evalParams := map[string]any{}
 	bsnString := convertStringStruct(bsn)
+	logger.Warning("bsn:")
+	logger.Warning(bsnString)
+	logger.Warning("end bsn")
 	evalParams["BSN"] = bsnString
 
 	evalParams["SOCIAAL_MINIMUM"] = C.int(sociaalminimum)
@@ -114,7 +118,6 @@ func EvaluateBetalingsRegelingRijk(bsn C.struct_String_t, sociaalminimum C.uint3
 		evalParams["EERDERE_REGELING_NIET_NAGEKOMEN"] = false
 	}
 
-	logger := logger.New("main", os.Stdout, logrus.DebugLevel)
 	caseManager := manager.New(logger)
 	claimManager := inmemory.New(logger, caseManager)
 	ruleResolver, _ := ruleresolver.New()
@@ -167,9 +170,16 @@ func EvaluateBetalingsRegelingRijk(bsn C.struct_String_t, sociaalminimum C.uint3
 
 //export EvaluateToeslagenWetBestaansMinimum
 func EvaluateToeslagenWetBestaansMinimum(bsn C.struct_String_t, partner C.int, woningdeler C.int, bsnPartner C.struct_String_t, bsnWoningDeler C.struct_String_t, leeftijd C.int, leeftijdPartner C.int, leeftijdWoningdeler C.int) C.struct_Machine_law_Result_t {
+
+	logger := logger.New("main", os.Stdout, logrus.DebugLevel)
+
 	evalParams := map[string]any{}
 	bsnString := convertStringStruct(bsn)
+	logger.Warning("eval params:")
+	logger.Warning("bsn")
+	logger.Warning(bsnString)
 	evalParams["BSN"] = bsnString
+	logger.Warning("leeftijd")
 	evalParams["LEEFTIJD"] = leeftijd
 	if partner > 0 {
 		evalParams["HEEFT_PARTNER"] = true
@@ -187,7 +197,6 @@ func EvaluateToeslagenWetBestaansMinimum(bsn C.struct_String_t, partner C.int, w
 	evalParams["WONINGDELER_BSN"] = convertStringStruct(bsnWoningDeler)
 	evalParams["LEEFTIJD_WONINGDELER"] = leeftijdWoningdeler
 
-	logger := logger.New("main", os.Stdout, logrus.DebugLevel)
 	caseManager := manager.New(logger)
 	claimManager := inmemory.New(logger, caseManager)
 	ruleResolver, _ := ruleresolver.New()
@@ -195,7 +204,7 @@ func EvaluateToeslagenWetBestaansMinimum(bsn C.struct_String_t, partner C.int, w
 	services, _ := serviceprovider.New(logger, time.Now(), caseManager, claimManager, ruleResolver, serviceprovider.WithRuleServiceInMemory(), serviceprovider.WithOrganizationName("vorijkapp"))
 
 	serviceString := "UWV"
-	lawString := "oeslagenwet"
+	lawString := "toeslagenwet"
 
 	// Set up context
 	ctx := context.Background()

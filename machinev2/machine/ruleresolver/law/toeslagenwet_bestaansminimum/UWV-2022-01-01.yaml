@@ -237,7 +237,7 @@ requirements:
 
 actions:
   - output: "sociaal_minimum"
-    operation: GET
+    #operation: GET
     legal_basis:
         law: "Toeslagenwet"
         bwb_id: "BWBR0004043"
