@@ -310,8 +310,8 @@ actions:
       juriconnect: "jci1.3:c:BWBR0050600&artikel=2:3&z=2025-01-01&g=2025-01-01"
       explanation: "Afloscapaciteit is inkomen minus sociaal minimum"
     values:
-      - "$INKOMEN"
       - "$SOCIAAL_MINIMUM"
+      - "$INKOMEN"
 
   # Bepaal of er recht is op regeling en wat voor type
   - output: "is_gerechtigd"
