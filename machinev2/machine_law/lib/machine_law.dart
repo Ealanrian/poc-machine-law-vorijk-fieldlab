@@ -1,8 +1,9 @@
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
-import 'dart:isolate';
+import 'dart:typed_data';
 
 
 import 'package:ffi/ffi.dart';
@@ -39,18 +40,51 @@ int machineLawEvaluate() {
 }
 
 
-int evalBetalingsRegeling() {
-  final Pointer<String_t> bsn = createStringPointer("100000001");
-  final int sociaalMinimum = 10000;
-  final int inkomen = 100;
-  final int totaleschuld = 10000000;
-  final int nietNagekomen = 0;
+String evalBetalingsRegeling(String bsn, int sociaalMinimum, int inkomen, int totaleschuld, bool nietNagekomen) {
+  final Pointer<String_t> bsnString = createStringPointer(bsn);
 
-  Machine_law_Result_t result =_bindings.EvaluateBetalingsRegelingRijk(bsn.ref,sociaalMinimum,inkomen, totaleschuld,nietNagekomen);
+  int nietNagekomenInt = 0;
+  if (nietNagekomen == true) {
+    nietNagekomenInt = 1;
+  }
+  var resultString = "";
+  Machine_law_Result_t result =_bindings.EvaluateBetalingsRegelingRijk(bsnString.ref,sociaalMinimum,inkomen, totaleschuld, nietNagekomenInt);
+  if (result.resultCode ==1) {
+    resultString = createStringFromStringT(result.resultMessage);
+  } else {
+    resultString = "fout in berekening";
+  }
+  return resultString;
+}
 
-  return result.resultCode;
+String evalToeslagenWetBestaansMinimum(String bsn, bool heeftPartner, bool heeftWoningDeler, String partnerBsn, String woningDelerBsn, int leeftijd, int leeftijdPartner, int leeftijdWoningDeler) {
+  final Pointer<String_t> bsnString = createStringPointer(bsn);
+  final Pointer<String_t> bsnPartnerString = createStringPointer(partnerBsn);
+  final Pointer<String_t> bsnWoningDelerString = createStringPointer(woningDelerBsn);
+  int heeftPartnerInt = 0;
+  if (heeftPartner) {
+    heeftPartnerInt = 1;
+  }
+  int heeftWoningDelerInt = 0;
+  if (heeftWoningDeler) {
+    heeftWoningDelerInt = 1;
+  }
+  var resultString = "";
+      Machine_law_Result_t result =_bindings.EvaluateToeslagenWetBestaansMinimum(bsnString.ref, heeftPartnerInt, heeftWoningDelerInt, bsnPartnerString.ref, bsnWoningDelerString.ref, leeftijd, leeftijdPartner, leeftijdWoningDeler);
+  var resultCode = result.resultCode;
+  if (resultCode == 1) {
+    resultString = createStringFromStringT(result.resultMessage);
+  } else {
+    resultString = "no result";
+  }
+  return resultString;
+}
 
-  //EvaluateBetalingsRegelingRijk
+
+String createStringFromStringT(String_t string) {
+  final Uint8List resultMessage = string.string.asTypedList(string.length);
+  var resultString = utf8.decode(resultMessage);
+  return resultString;
 }
 
 Pointer<String_t> createStringPointer(String string){

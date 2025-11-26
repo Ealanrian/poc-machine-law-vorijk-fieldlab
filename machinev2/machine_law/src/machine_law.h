@@ -34,7 +34,7 @@
 
 FFI_PLUGIN_EXPORT struct Machine_law_Result_t Evaluate(struct String_t service, struct String_t law, struct Machine_law_Params_t parameters, struct String_t referenceDate, struct String_t effectiveDate, struct Machine_law_Params_t overwriteInput);
 FFI_PLUGIN_EXPORT struct Machine_law_Result_t EvaluateBetalingsRegelingRijk(struct String_t bsn, uint32_t sociaalMinimum, uint32_t inkomen, uint32_t totaleSchuld, int eerdereRegelingNietNagekomen );
-FFI_PLUGIN_EXPORT struct Machine_law_Result_t EvaluateToeslagenWetBestaansMinimum(struct String_t bsn, int partner, int woningdeler, struct String_t bsnPartner, struct String_t woningdelerBsn, uint8_t leeftijd, uint8_t leeftijdPartner, uint8_t leeftijdWoningDeler);
+FFI_PLUGIN_EXPORT struct Machine_law_Result_t EvaluateToeslagenWetBestaansMinimum(struct String_t bsn, int partner, int woningdeler, struct String_t bsnPartner, struct String_t woningdelerBsn, int leeftijd, int leeftijdPartner, int leeftijdWoningDeler);
 FFI_PLUGIN_EXPORT int machineLawStandalone();
 
 FFI_PLUGIN_EXPORT void freeParams(struct Machine_law_Params_t params);

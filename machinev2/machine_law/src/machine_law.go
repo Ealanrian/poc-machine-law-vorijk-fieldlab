@@ -121,18 +121,14 @@ func EvaluateBetalingsRegelingRijk(bsn C.struct_String_t, sociaalminimum C.uint3
 
 	services, _ := serviceprovider.New(logger, time.Now(), caseManager, claimManager, ruleResolver, serviceprovider.WithRuleServiceInMemory(), serviceprovider.WithOrganizationName("vorijkapp"))
 
-	//serviceString := convertStringStruct(service)
 	serviceString := "CJIB"
-	//serviceString := "TOESLAGEN"
-	//lawString := convertStringStruct("beleidsregels_betalingsregelingen_rijk")
 	lawString := "beleidsregels_betalingsregelingen_rijk"
-	//lawString := "zorgtoeslagwet"
-	//referenceDateString := convertStringStruct(referenceDate)
 
 	// Set up context
 	ctx := context.Background()
 
 	resultCode := 0
+	resultString := ""
 	result, err := services.Evaluate(ctx, serviceString, lawString, evalParams, nil, nil, nil, "", false)
 	if err != nil {
 		resultCode = 255
@@ -142,11 +138,18 @@ func EvaluateBetalingsRegelingRijk(bsn C.struct_String_t, sociaalminimum C.uint3
 	} else {
 		if result.RequirementsMet {
 			resultCode = 1
+			isGerechtigd := result.Output["is_gerechtigd"]
+			aflosCapaciteit := result.Output["afloscapaciteit"]
+			typeRegeling := result.Output["type_regeling"]
+			termijnBedrag := result.Output["termijnbedrag"]
+			aantalTermijnen := result.Output["aantal_termijnen"]
+			resultString = fmt.Sprintf("is_gerechtigd:%t;afloscapaciteit:%d;type_regeling:%s;termijnbedrag:%d;aantal_termijnen:%d", isGerechtigd, aflosCapaciteit, typeRegeling, termijnBedrag, aantalTermijnen)
 		} else {
 			resultCode = 2
 		}
+
 	}
-	testString := []byte("test")
+	testString := []byte(resultString)
 	var cTestString unsafe.Pointer
 	if len(testString) > 0 {
 		cTestString = C.malloc(C.size_t(len(testString)))
@@ -156,7 +159,76 @@ func EvaluateBetalingsRegelingRijk(bsn C.struct_String_t, sociaalminimum C.uint3
 	return C.struct_Machine_law_Result_t{
 		resultCode: C.uint8_t(resultCode),
 		resultMessage: C.struct_String_t{
-			length: C.uint16_t(len("t")),
+			length: C.uint16_t(len(testString)),
+			string: (*C.uint8_t)(cTestString),
+		},
+	}
+}
+
+//export EvaluateToeslagenWetBestaansMinimum
+func EvaluateToeslagenWetBestaansMinimum(bsn C.struct_String_t, partner C.int, woningdeler C.int, bsnPartner C.struct_String_t, bsnWoningDeler C.struct_String_t, leeftijd C.int, leeftijdPartner C.int, leeftijdWoningdeler C.int) C.struct_Machine_law_Result_t {
+	evalParams := map[string]any{}
+	bsnString := convertStringStruct(bsn)
+	evalParams["BSN"] = bsnString
+	evalParams["LEEFTIJD"] = leeftijd
+	if partner > 0 {
+		evalParams["HEEFT_PARTNER"] = true
+	} else {
+		evalParams["HEEFT_PARTNER"] = false
+	}
+
+	evalParams["PARTNER_BSN"] = convertStringStruct(bsnPartner)
+	evalParams["LEEFTIJD_PARTNER"] = leeftijdPartner
+	if woningdeler > 0 {
+		evalParams["HEEFT_WONINGDELER"] = true
+	} else {
+		evalParams["HEEFT_WONINGDELER"] = false
+	}
+	evalParams["WONINGDELER_BSN"] = convertStringStruct(bsnWoningDeler)
+	evalParams["LEEFTIJD_WONINGDELER"] = leeftijdWoningdeler
+
+	logger := logger.New("main", os.Stdout, logrus.DebugLevel)
+	caseManager := manager.New(logger)
+	claimManager := inmemory.New(logger, caseManager)
+	ruleResolver, _ := ruleresolver.New()
+
+	services, _ := serviceprovider.New(logger, time.Now(), caseManager, claimManager, ruleResolver, serviceprovider.WithRuleServiceInMemory(), serviceprovider.WithOrganizationName("vorijkapp"))
+
+	serviceString := "UWV"
+	lawString := "oeslagenwet"
+
+	// Set up context
+	ctx := context.Background()
+
+	resultCode := 0
+	resultString := ""
+	result, err := services.Evaluate(ctx, serviceString, lawString, evalParams, nil, nil, nil, "", false)
+	if err != nil {
+		resultCode = 255
+	}
+	if result == nil {
+		resultCode = 254
+	} else {
+		if result.RequirementsMet {
+			resultCode = 1
+			sociaalMinimum := result.Output["sociaal_minimum"]
+			resultString = fmt.Sprintf("is_gerechtigd:%d;", sociaalMinimum)
+
+		} else {
+			resultCode = 2
+		}
+	}
+	testString := []byte(resultString)
+	var cTestString unsafe.Pointer
+	if len(testString) > 0 {
+		cTestString = C.malloc(C.size_t(len(testString)))
+		C.memcpy(cTestString, unsafe.Pointer(&testString[0]), C.size_t(len(testString)))
+	}
+
+	return C.struct_Machine_law_Result_t{
+		resultCode: C.uint8_t(resultCode),
+		resultMessage: C.struct_String_t{
+			length: C.uint16_t(len(testString)),
 			string: (*C.uint8_t)(cTestString),
 		},
 	}

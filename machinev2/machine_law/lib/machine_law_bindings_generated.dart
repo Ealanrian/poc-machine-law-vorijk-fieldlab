@@ -133,9 +133,9 @@ class MachineLawBindings {
             ffi.Int,
             String_t,
             String_t,
-            ffi.Uint8,
-            ffi.Uint8,
-            ffi.Uint8,
+            ffi.Uint32,
+            ffi.Uint32,
+            ffi.Uint32,
           )
         >
       >('EvaluateToeslagenWetBestaansMinimum');

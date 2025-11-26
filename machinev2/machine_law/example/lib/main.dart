@@ -97,11 +97,12 @@ class _MyAppState extends State<MyApp> {
                   child: const Text('check state'),
                 ),
                 spacerSmall,
+                const Divider(),
                 ElevatedButton(
                   onPressed: () async {
                     bool? success;
                     try {
-                      int eval = machine_law.evalBetalingsRegeling();
+                      String eval = machine_law.evalBetalingsRegeling("100000001", 1000, 100, 1000000, false);
 
                       result = "Law result: "+eval.toString();
                     } catch (error) {
@@ -111,6 +112,22 @@ class _MyAppState extends State<MyApp> {
                     await setResultState(result);
                   },
                   child: const Text('Eval BetalingsRegeling'),
+                ), spacerSmall,
+                const Divider(),
+                ElevatedButton(
+                  onPressed: () async {
+                    bool? success;
+                    try {
+                      String eval = machine_law.evalToeslagenWetBestaansMinimum("100000001",false, false, "","", 30, 0 ,0,);
+
+                      result = "Law result: "+eval.toString();
+                    } catch (error) {
+                      result = "It failed "+error.toString();
+                    }
+
+                    await setResultState(result);
+                  },
+                  child: const Text('Eval bestaansMinimum'),
                 ),
                 const Divider(),
                 const Text(
